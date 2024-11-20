@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원권 계산기</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>회원권 계산기</h1>
+
+    <div class="calculator">
+      <label for="membership">회원권 선택:</label>
+      <select id="membership" class="equal-width"></select>
+
+      <label for="locker">락커 이용 개월 수:</label>
+      <input type="number" id="locker" class="equal-width" min="0" value="0">
+
+      <label for="uniform">운동복 이용 개월 수:</label>
+      <input type="number" id="uniform" class="equal-width" min="0" value="0">
+
+      <label for="review-event">리뷰 이벤트 적용 여부:</label>
+      <select id="review-event" class="equal-width">
+        <option value="false" selected>미적용</option>
+        <option value="true">적용</option>
+      </select>
+
+      <div class="results">
+        <p>합계: <span id="total">0원</span></p>
+        <p>부가세 포함 합계: <span id="total-with-tax">0원</span></p>
+      </div>
+    </div>
+
+    <div class="membership-management">
+      <button class="toggle-button" onclick="promptForPassword()">회원권 가격 수정</button>
+      <div id="membership-management-section" style="display: none;">
+        <table>
+          <thead>
+            <tr>
+              <th>회원권 종류</th>
+              <th>가격</th>
+              <th>삭제</th>
+            </tr>
+          </thead>
+          <tbody id="membership-table">
+            <!-- 회원권 목록이 여기 채워집니다 -->
+          </tbody>
+        </table>
+        <div class="add-membership">
+          <input type="text" id="add-membership-name" class="input-small" placeholder="회원권 이름">
+          <input type="number" id="add-membership-price" class="input-small" placeholder="가격">
+          <button class="add-button" id="add-membership-btn">추가</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
