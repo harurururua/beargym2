@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addMembershipName = document.getElementById("add-membership-name");
   const addMembershipPrice = document.getElementById("add-membership-price");
 
-  const PASSWORD = "beargym11!";
+  const PASSWORD = "beargym11!"; // 비밀번호 설정
 
   let memberships = [
     { name: "일반 1개월", price: 100000 },
@@ -82,20 +82,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const lockerPrice = lockerMonths > 0 ? lockerMonths * 10000 : 0;
     const uniformPrice = uniformMonths > 0 ? uniformMonths * 10000 : 0;
 
-    let discountedMembershipPrice = membershipPrice;
+    // 기본 회원권 가격에 할인 적용
+    let basePrice = membershipPrice;
 
-    if (isReviewApplied) {
-      discountedMembershipPrice = Math.max(discountedMembershipPrice - 10000, 0);
-    }
+    // 지인 동반 할인 시 리뷰 이벤트 할인 포함
     if (isFriendDiscountApplied) {
-      discountedMembershipPrice = Math.max(discountedMembershipPrice - 15000, 0);
+      basePrice = Math.max(basePrice - 10000, 0); // 리뷰 이벤트 할인 자동 포함
+    } else if (isReviewApplied) {
+      basePrice = Math.max(basePrice - 10000, 0); // 리뷰 이벤트 할인
     }
 
-    const total = discountedMembershipPrice + lockerPrice + uniformPrice;
-    const totalWithTax = Math.round(total * 1.1);
+    // 5% 할인 적용
+    const discountedPrice = basePrice * 0.95;
 
-    totalElement.textContent = `${total.toLocaleString()}원`;
-    totalWithTaxElement.textContent = `${totalWithTax.toLocaleString()}원`;
+    // 기타 추가 비용 포함
+    const total = discountedPrice + lockerPrice + uniformPrice;
+
+    // 부가세 포함 가격 계산 (1원 단위 내림 처리)
+    const totalWithTax = Math.floor(total * 1.1);
+
+    // 결과 표시
+    totalElement.textContent = `${Math.floor(total)}원`; // 1원 단위 내림
+    totalWithTaxElement.textContent = `${totalWithTax}원`; // 부가세 포함 가격
   }
 
   membershipSelect.addEventListener("change", calculateTotal);
