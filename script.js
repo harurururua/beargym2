@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 지인 동반 할인 시 리뷰 이벤트 할인 자동 적용
     if (isFriendDiscountApplied) {
-      // 리뷰 이벤트 할인 적용 (10,000원 자동 적용)
+      // 지인 할인 적용 시, 리뷰 이벤트 할인 10,000원 자동 적용
       basePrice = Math.max(basePrice - 10000, 0); 
       // 리뷰 이벤트 버튼 비활성화
       reviewEventSelect.disabled = true;
@@ -101,8 +101,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // 5% 할인 적용
-    const discountedPrice = basePrice * 0.95;
+    // "모든 이벤트 미적용" 시 5% 할인 적용하지 않도록 변경
+    let discountedPrice = basePrice;
+    if (isReviewApplied || isFriendDiscountApplied) {
+      // 이벤트가 적용된 경우에만 5% 할인 적용
+      discountedPrice = basePrice * 0.95;
+    }
 
     // 기타 추가 비용 포함
     const total = discountedPrice + lockerPrice + uniformPrice;
