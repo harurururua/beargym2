@@ -1,14 +1,4 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>회원권 계산</title>
-  <link rel="stylesheet" href="./style.css">
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -32,6 +22,12 @@
 
       <label for="review-event">리뷰 이벤트 적용 여부:</label>
       <select id="review-event" class="equal-width">
+        <option value="false" selected>미적용</option>
+        <option value="true">적용</option>
+      </select>
+
+      <label for="friend-discount">지인 할인 적용 여부:</label>
+      <select id="friend-discount" class="equal-width">
         <option value="false" selected>미적용</option>
         <option value="true">적용</option>
       </select>
@@ -66,10 +62,5 @@
     </div>
   </div>
   <script src="script.js"></script>
-</body>
-</html>
-<!-- partial -->
-  <script  src="./script.js"></script>
-
 </body>
 </html>
