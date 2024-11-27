@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 기본 가격 설정
     let basePrice = membershipPrice;
 
-    // 지인 할인 적용 시 리뷰 이벤트 할인 미적용
+    // 이벤트 적용 로직
     if (isFriendDiscountApplied) {
       // 지인 할인 적용 시 10,000원 할인 + 5% 할인
       basePrice = Math.max(basePrice - 10000, 0); // 10,000원 할인
