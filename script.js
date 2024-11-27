@@ -83,33 +83,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const lockerPrice = lockerMonths > 0 ? lockerMonths * 10000 : 0;
     const uniformPrice = uniformMonths > 0 ? uniformMonths * 10000 : 0;
 
-    // 기본 회원권 가격에 할인 적용
+    // 기본 가격 설정
     let basePrice = membershipPrice;
 
-    // 지인 동반 할인 시 리뷰 이벤트 할인 자동 적용
+    // 지인 할인 적용 시 리뷰 이벤트 할인 미적용
     if (isFriendDiscountApplied) {
-      // 지인 할인 적용 시, 리뷰 이벤트 할인 10,000원 자동 적용
-      basePrice = Math.max(basePrice - 10000, 0); 
-      // 리뷰 이벤트 버튼 비활성화
-      reviewEventSelect.disabled = true;
-      reviewEventSelect.value = "false"; // 강제로 '미적용'으로 설정
-    } else {
-      // 지인 할인 아닌 경우 리뷰 이벤트 적용 여부 확인
-      reviewEventSelect.disabled = false; // 리뷰 이벤트 버튼 활성화
-      if (isReviewApplied) {
-        basePrice = Math.max(basePrice - 10000, 0); // 리뷰 이벤트 할인 적용
-      }
+      // 지인 할인 적용 시 10,000원 할인 + 5% 할인
+      basePrice = Math.max(basePrice - 10000, 0); // 10,000원 할인
+      basePrice = basePrice * 0.95; // 5% 할인
+    } else if (isReviewApplied) {
+      // 리뷰 이벤트만 적용 시 10,000원 할인
+      basePrice = Math.max(basePrice - 10000, 0);
     }
 
-    // "모든 이벤트 미적용" 시 5% 할인 적용하지 않도록 변경
-    let discountedPrice = basePrice;
-    if (isReviewApplied || isFriendDiscountApplied) {
-      // 이벤트가 적용된 경우에만 5% 할인 적용
-      discountedPrice = basePrice * 0.95;
-    }
-
-    // 기타 추가 비용 포함
-    const total = discountedPrice + lockerPrice + uniformPrice;
+    // 최종 가격 계산
+    const total = basePrice + lockerPrice + uniformPrice;
 
     // 부가세 포함 가격 계산 (1원 단위 내림 처리)
     const totalWithTax = Math.floor(total * 1.1);
