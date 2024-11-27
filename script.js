@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const lockerInput = document.getElementById("locker");
   const uniformInput = document.getElementById("uniform");
   const reviewEventSelect = document.getElementById("review-event");
+  const friendDiscountSelect = document.getElementById("friend-discount");
   const totalElement = document.getElementById("total");
   const totalWithTaxElement = document.getElementById("total-with-tax");
 
@@ -11,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addMembershipName = document.getElementById("add-membership-name");
   const addMembershipPrice = document.getElementById("add-membership-price");
 
-  const PASSWORD = "beargym11!"; // 비밀번호 설정
+  const PASSWORD = "beargym11!";
 
   let memberships = [
     { name: "일반 1개월", price: 100000 },
@@ -73,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const lockerMonths = parseInt(lockerInput.value, 10);
     const uniformMonths = parseInt(uniformInput.value, 10);
     const isReviewApplied = reviewEventSelect.value === "true";
+    const isFriendDiscountApplied = friendDiscountSelect.value === "true";
 
     if (isNaN(membershipIndex) || membershipIndex < 0) return;
 
@@ -80,9 +82,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const lockerPrice = lockerMonths > 0 ? lockerMonths * 10000 : 0;
     const uniformPrice = uniformMonths > 0 ? uniformMonths * 10000 : 0;
 
-    const discountedMembershipPrice = isReviewApplied
-      ? Math.max(membershipPrice - 10000, 0)
-      : membershipPrice;
+    let discountedMembershipPrice = membershipPrice;
+
+    if (isReviewApplied) {
+      discountedMembershipPrice = Math.max(discountedMembershipPrice - 10000, 0);
+    }
+    if (isFriendDiscountApplied) {
+      discountedMembershipPrice = Math.max(discountedMembershipPrice - 15000, 0);
+    }
 
     const total = discountedMembershipPrice + lockerPrice + uniformPrice;
     const totalWithTax = Math.round(total * 1.1);
@@ -95,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
   lockerInput.addEventListener("input", calculateTotal);
   uniformInput.addEventListener("input", calculateTotal);
   reviewEventSelect.addEventListener("change", calculateTotal);
+  friendDiscountSelect.addEventListener("change", calculateTotal);
 
   function toggleMembershipManagement() {
     const section = document.getElementById("membership-management-section");
